@@ -328,3 +328,58 @@ frontend: |
       size: CommonSizeEnums.SMALL,
     }
   ]
+backend: |
+  [
+    connection_id:
+       - key: sftp.custom.connection-id 
+    remote_path:
+       - key: sftp.supplier.remote-dir
+    filename_pattern:
+      - key: sftp.supplier.filename-pattern
+        default: ""
+    schedule:
+      - key: sftp.custom.schedule
+        default: "* * * * * *"
+    duplicate_file_action:
+      - default: ignore
+        values:
+          - ignore :
+             - key: sftp.supplier.file.prevent-duplicates
+               value: false
+          - collect-and-process:
+             - key: sftp.supplier.file.prevent-duplicates
+               value: false
+          - collect-but-skip-processing:
+             - key: sftp.supplier.file.prevent-duplicates
+               value: true
+    post_collect_action:
+      - default: do-nothing
+        values:
+          - do-nothing:
+          - rename-files:
+            - key: sftp.supplier.rename-remote-files-to
+              value: rename_remote_file
+            - key: sftp.supplier.delete-remote-files
+              value: false
+          - move-files:
+            - key: sftp.supplier.local-dir
+              value: move_remote_file
+          - delete-files:
+            - key: sftp.supplier.delete-remote-files
+              value: delete_remote_file
+    flag_file_enabled:
+      - key: sftp.custom.flag-file-enabled
+        default: false
+    flag_file_pattern:
+      - key: sftp.custom.flag-file-pattern
+        default: ""
+    retry_enabled:
+      - key: sftp.custom.retry-enabled
+        default: false sftp.custom.retry-enabled
+    retry_count:
+      - key: sftp.custom.retry-count
+        default: 0
+    retry_interval:
+      - key: sftp.custom.retry-interval
+        default: 0
+  ]
