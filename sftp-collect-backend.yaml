@@ -1,10 +1,9 @@
 worker: sftp-collect
-backend: |
-  [
+backend: 
     connection_id:
-      - key: sftp.custom.connection-id
+       - key: sftp.custom.connection-id 
     remote_path:
-      - key: sftp.supplier.remote-dir
+       - key: sftp.supplier.remote-dir
     filename_pattern:
       - key: sftp.supplier.filename-pattern
         default: ""
@@ -53,4 +52,3 @@ backend: |
     retry_interval:
       - key: sftp.custom.retry-interval
         default: 0
-  ]
