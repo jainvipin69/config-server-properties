@@ -1,54 +1,74 @@
 worker: sftp-collect
 backend: 
-    connection_id:
-       - key: sftp.custom.connection-id 
-    remote_path:
-       - key: sftp.supplier.remote-dir
-    filename_pattern:
-      - key: sftp.supplier.filename-pattern
-        default: ""
-    schedule:
-      - key: sftp.custom.schedule
-        default: "* * * * * *"
-    duplicate_file_action:
-      - default: ignore
-        values:
-          - ignore :
-             - key: sftp.supplier.file.prevent-duplicates
-               value: false
-          - collect-and-process:
-             - key: sftp.supplier.file.prevent-duplicates
-               value: false
-          - collect-but-skip-processing:
-             - key: sftp.supplier.file.prevent-duplicates
-               value: true
-    post_collect_action:
-      - default: do-nothing
-        values:
-          - do-nothing:
-          - rename-files:
+  connection_id:
+    key: sftp.custom.connection-id
+    valueFrom: connection_id
+    options: false
+  remote_path:
+      key: sftp.supplier.remote-dir
+      valueFrom: remote_path
+      options: false
+  filename_pattern:
+      key: sftp.supplier.filename-pattern
+      valueFrom: filename_pattern
+      default: ""
+      options: false
+  schedule:
+      key: sftp.custom.schedule
+      valueFrom: schedule
+      default: "* * * * * *"
+      options: false
+  duplicate_file_action:
+      default: ignore
+      options: true
+      values:
+         ignore :
+            - key: sftp.supplier.file.prevent-duplicates
+              value: false
+         collect-and-process:
+            - key: sftp.supplier.file.prevent-duplicates
+              value: false
+         collect-but-skip-processing:
+            - key: sftp.supplier.file.prevent-duplicates
+              value: true
+  post_collect_action:
+      default: do-nothing
+      options: true
+      values:
+         do-nothing:
+         rename-files:
             - key: sftp.supplier.rename-remote-files-to
-              value: rename_remote_file
+              valueFrom: rename_remote_file
             - key: sftp.supplier.delete-remote-files
               value: false
-          - move-files:
+         move-files:
             - key: sftp.supplier.local-dir
-              value: move_remote_file
-          - delete-files:
+              valueFrom: move_remote_file
+         delete-files:
             - key: sftp.supplier.delete-remote-files
-              value: delete_remote_file
-    flag_file_enabled:
-      - key: sftp.custom.flag-file-enabled
-        default: false
-    flag_file_pattern:
-      - key: sftp.custom.flag-file-pattern
-        default: ""
-    retry_enabled:
-      - key: sftp.custom.retry-enabled
-        default: false sftp.custom.retry-enabled
-    retry_count:
-      - key: sftp.custom.retry-count
-        default: 0
-    retry_interval:
-      - key: sftp.custom.retry-interval
-        default: 0
+              valueFrom: delete_remote_file
+  flag_file_enabled:
+      key: sftp.custom.flag-file-enabled
+      valueFrom: flag_file_enabled
+      default: false
+      options: false
+  flag_file_pattern:
+      key: sftp.custom.flag-file-pattern
+      valueFrom: flag_file_pattern
+      default: ""
+      options: false
+  retry_enabled:
+      key: sftp.custom.retry-enabled
+      valueFrom: retry_enabled
+      default: false
+      options: false
+  retry_count:
+      key: sftp.custom.retry-count
+      valueFrom: retry_count
+      default: 0
+      options: false
+  retry_interval:
+      key: sftp.custom.retry-interval
+      valueFrom: retry_interval
+      default: 0
+      options: false
