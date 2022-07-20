@@ -1,0 +1,28 @@
+worker: worker-list
+source: |
+  [
+    {
+      - name: sftp-collect
+        displayName: File collector
+        description: Collect files from local or remote system
+        icon: <File/>
+    }
+  ]
+task: |
+  [
+    {
+      - name: file-split-task
+        displayName: File splitter worker
+        description: Split contents of files into multiple files
+        icon: <Split/>
+    }
+  ]
+destination: |
+  [
+    {
+      - name: sftp-distribute
+        displayName: File distributor
+        description: Collect file from remote sftp server and send them to a configured directory
+        icon: <Database/>
+    }
+  ]
