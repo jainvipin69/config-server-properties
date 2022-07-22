@@ -1,28 +1,20 @@
 worker: worker-list
-source: 
-  [
-    {
-        name: sftp-collect,
-        displayName: File collector,
-        description: Collect files from local or remote system,
-        icon: <File/>
-    }
-  ]
-task: 
-  [
-    {
-        name: file-split-task,
-        displayName: File splitter worker,
-        description: Split contents of files into multiple files,
-        icon: <Split/>
-    }
-  ]
-destination: 
-  [
-    {
-        name: sftp-distribute,
-        displayName: File distributor,
-        description: Collect file from remote sftp server and send them to a configured directory,
-        icon: <Database/>
-    }
-  ]
+source:
+  - name: sftp-collect
+    displayName: SFTP File collector
+    description: Collect files from local or remote system
+    icon: "<FileDownload/>"
+  - name: aws-s3-collect
+    displayName: AWS S3 File collector
+    description: Collect files from AWS S3 bucket
+    icon: "<FileDownload/>"
+task:
+  - name: file-split-task
+    displayName: File splitter worker
+    description: Split contents of files into multiple files
+    icon: "<Split/>"
+destination:
+  - name: sftp-distribute
+    displayName: SFTP File distributor
+    description: Distribute file from remote sftp server to a configured directory
+    icon: "<FileUpload/>"
